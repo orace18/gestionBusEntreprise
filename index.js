@@ -10,6 +10,7 @@ const ligneRoutes = require('./routers/lignesRoutes');
 const agenceRoutes = require('./routers/agenceRoutes');
 const busRoutes = require('./routers/busRoutes');
 const ticketRoutes = require('./routers/ticketRoutes');
+const conducteurRoutes = require('./routers/conducteurRoutes');
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use('/api/lignes', ligneRoutes);
 app.use('/api/agences', agenceRoutes);
 app.use('/api/buses', busRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/conducteurs', conducteurRoutes);
 
 
 const connection = mysql.createConnection(dbConfig);
@@ -51,7 +53,6 @@ server.listen(port, hostname, () => {
 
 
 
-// Fonction pour créer les tables
 function createTables() {
     const sqlDirecteurAgence = `
     CREATE TABLE IF NOT EXISTS DirecteurAgence (

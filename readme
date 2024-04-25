@@ -1,3 +1,7 @@
-Il faut tout installer puis :
+Il faut tout installer avec la commande *npm install* puis :
     - Créer un Directeur d'agence
     - Créer une Ligne de transport
+    - Créer une Agence
+    - Créer un Conducteur
+    - Créer un Bus
+    - Créer un Ticket
