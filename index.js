@@ -7,6 +7,10 @@ const routes = require('./routers/routes');
 const dbConfig = require('./databases/dbConfig');
 const directeurRoutes = require('./routers/directeurAgenceRoutes');
 const ligneRoutes = require('./routers/lignesRoutes');
+const agenceRoutes = require('./routers/agenceRoutes');
+const busRoutes = require('./routers/busRoutes');
+const ticketRoutes = require('./routers/ticketRoutes');
+
 
 const app = express();
 const port = process.env.PORT || 7878; 
@@ -19,7 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/directeurs', directeurRoutes);
 app.use('/api/lignes', ligneRoutes);
-
+app.use('/api/agences', agenceRoutes);
+app.use('/api/buses', busRoutes);
+app.use('/api/tickets', ticketRoutes);
 
 
 const connection = mysql.createConnection(dbConfig);
