@@ -1,0 +1,31 @@
+{
+  "name": "node_entreprise_backend",
+  "version": "1.0.0",
+  "description": "gestion de ticket",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orace18/gestionBusEntreprise.git"
+  },
+  "keywords": [
+    "ticket",
+    "bus",
+    "entreprise", 
+    "transport"
+  ],
+  "author": "Orace EDJO",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orace18/gestionBusEntreprise/issues"
+  },
+  "homepage": "https://github.com/orace18/gestionBusEntreprise#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql": "^2.18.1"
+  }
+}
