@@ -11,6 +11,7 @@ const agenceRoutes = require('./routers/agenceRoutes');
 const busRoutes = require('./routers/busRoutes');
 const ticketRoutes = require('./routers/ticketRoutes');
 const conducteurRoutes = require('./routers/conducteurRoutes');
+const societeRoutes = require('./routers/societeRoutes');
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use('/api/agences', agenceRoutes);
 app.use('/api/buses', busRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/conducteurs', conducteurRoutes);
+app.use('/api/societes', societeRoutes);
 
 
 const connection = mysql.createConnection(dbConfig);

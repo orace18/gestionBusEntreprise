@@ -5,3 +5,4 @@ Il faut tout installer avec la commande *npm install* puis :
     - Créer un Conducteur
     - Créer un Bus
     - Créer un Ticket
+    - Lors de l'inscription nous créons aussi l'entreprise/societe
