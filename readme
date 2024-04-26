@@ -6,3 +6,6 @@ Il faut tout installer avec la commande *npm install* puis :
     - Créer un Bus
     - Créer un Ticket
     - Lors de l'inscription nous créons aussi l'entreprise/societe
+
+Dans ce projet la base de données est SQL qui est géré avec phpmyadmin et qui se
+connecte à une application serveur Express
