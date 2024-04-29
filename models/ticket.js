@@ -54,15 +54,15 @@ exports.getTicketById = (id) => {
 }; */
 
 exports.updateTicket = (id, updates) => {
-    console.log(updates); // Ajouter pour débugger le contenu de updates
+    console.log(updates); 
 
     return new Promise((resolve, reject) => {
         const fields = Object.keys(updates).map(field => `${field} = ?`).join(', ');
         const values = Object.values(updates);
-        values.push(id); // Ajouter l'id à la fin de la liste des valeurs pour la clause WHERE
+        values.push(id); 
 
         const query = `UPDATE Ticket SET ${fields} WHERE id = ?`;
-        console.log(query); // Afficher la requête pour débugger
+        console.log(query); 
 
         pool.query(
             query,
