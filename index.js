@@ -56,6 +56,19 @@ server.listen(port, hostname, () => {
 
 
 function createTables() {
+
+    const sqlSociete =
+    `CREATE TABLE IF NOT EXISTS Society (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nom VARCHAR(255) NOT NULL,
+        adresse VARCHAR(255),
+        numero VARCHAR(50),
+        user_id INT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
+    `;
+
     const sqlDirecteurAgence = `
     CREATE TABLE IF NOT EXISTS DirecteurAgence (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -72,6 +85,8 @@ function createTables() {
         siege VARCHAR(255),
         tel VARCHAR(20),
         idDirecteur INT,
+        idSociete INT,
+        FOREIGN KEY (idSociete) REFERENCES society(id),
         FOREIGN KEY (idDirecteur) REFERENCES DirecteurAgence(id)
             ON DELETE SET NULL
             ON UPDATE CASCADE
@@ -131,12 +146,18 @@ function createTables() {
             idAgence INT,
             idligne INT,
             heuredestination TIME,
+            isbuy BOOLEAN DEFAULT FALSE,
+            Tarif INT,
             FOREIGN KEY (idAgence) REFERENCES Agence(id),
             FOREIGN KEY (idligne) REFERENCES Ligne(id)
         );`;
     
 
     // Exécution des requêtes de création de table
+    connection.query(sqlSociete, (err, result) => {
+        if (err) throw err;
+        console.log("Table Societe créée ou déjà existante.");
+    });
     connection.query(sqlDirecteurAgence, (err, result) => {
         if (err) throw err;
         console.log("Table DirecteurAgence créée ou déjà existante.");

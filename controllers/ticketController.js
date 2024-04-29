@@ -32,7 +32,7 @@ exports.getTicketById = async (req, res) => {
     }
 };
 
-exports.updateTicket = async (req, res) => {
+/* exports.updateTicket = async (req, res) => {
     try {
         const { id } = req.params;
         const affectedRows = await Ticket.updateTicket(id, ...Object.values(req.body));
@@ -44,7 +44,23 @@ exports.updateTicket = async (req, res) => {
     } catch (error) {
         res.status(500).send(error.message);
     }
+}; */
+
+exports.updateTicket = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body;
+        const affectedRows = await Ticket.updateTicket(id, updates);
+        if (affectedRows > 0) {
+            res.status(200).send('Ticket mis à jour avec succès');
+        } else {
+            res.status(404).send('Ticket non trouvé');
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 };
+
 
 exports.deleteTicket = async (req, res) => {
     try {
@@ -59,3 +75,5 @@ exports.deleteTicket = async (req, res) => {
         res.status(500).send(error.message);
     }
 };
+
+
