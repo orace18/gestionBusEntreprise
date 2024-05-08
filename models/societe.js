@@ -3,7 +3,7 @@ const pool = require('../databases/database');
 exports.createSociete = (nom, numero, userId) => {
     return new Promise((resolve, reject) => {
         pool.query(
-            'INSERT INTO societes (nom, numero, userId, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())',
+            'INSERT INTO society (nom, numero, userId, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())',
             [nom, numero, userId],
             (error, results) => {
                 if (error) {
@@ -17,7 +17,7 @@ exports.createSociete = (nom, numero, userId) => {
 
 exports.getAllSocietes = () => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM societes', (error, results) => {
+        pool.query('SELECT * FROM society', (error, results) => {
             if (error) {
                 return reject(error);
             }
@@ -28,7 +28,7 @@ exports.getAllSocietes = () => {
 
 exports.getSocieteById = (id) => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM societes WHERE id = ?', [id], (error, results) => {
+        pool.query('SELECT * FROM society WHERE id = ?', [id], (error, results) => {
             if (error) {
                 return reject(error);
             }

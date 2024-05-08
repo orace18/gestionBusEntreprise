@@ -16,7 +16,7 @@ const societeRoutes = require('./routers/societeRoutes');
 
 const app = express();
 const port = process.env.PORT || 7878; 
-const hostname = process.env.HOSTNAME || '192.168.0.109'; 
+const hostname = process.env.HOSTNAME || '192.168.0.104'; 
 
 
 app.use(express.json());
@@ -86,14 +86,14 @@ function createTables() {
         tel VARCHAR(20),
         idDirecteur INT,
         idSociete INT,
-        FOREIGN KEY (idSociete) REFERENCES society(id),
+        FOREIGN KEY (idSociete) REFERENCES Society(id),
         FOREIGN KEY (idDirecteur) REFERENCES DirecteurAgence(id)
             ON DELETE SET NULL
             ON UPDATE CASCADE
     );`;
 
     const sqlLigne = `
-    CREATE TABLE IF NOT EXISTS Ligne (
+    CREATE TABLE IF NOT EXISTS Lignes (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nomdelaligne VARCHAR(255) NOT NULL,
         depart VARCHAR(255) NOT NULL,
@@ -101,7 +101,9 @@ function createTables() {
         heuredepart TIME NOT NULL,
         heuredestination TIME NOT NULL,
         nombresescales INT DEFAULT 0,
-        lieuescales TEXT
+        lieuescales TEXT,
+        idSociete INT,
+        FOREIGN KEY (idSociete) REFERENCES Society(id)
     );`;
 
     const sqlConducteur = `
@@ -129,7 +131,7 @@ function createTables() {
             datedestination DATE,
             type VARCHAR(100),
             idconducteur INT,
-            FOREIGN KEY (idligne) REFERENCES Ligne(id),
+            FOREIGN KEY (idligne) REFERENCES Lignes(id),
             FOREIGN KEY (idconducteur) REFERENCES Conducteur(id)
         );`;
     
@@ -138,18 +140,21 @@ function createTables() {
             id INT AUTO_INCREMENT PRIMARY KEY,
             type VARCHAR(100),
             nomvoyeur VARCHAR(255),
+            telvoyeur VARCHAR(255),
             dateachat DATE,
             datevoyage DATE,
             lieudepart VARCHAR(255),
             lieudestination VARCHAR(255),
             heuredepart TIME,
-            idAgence INT,
+            idSociete INT,
             idligne INT,
+            idBus INT,
             heuredestination TIME,
             isbuy BOOLEAN DEFAULT FALSE,
             Tarif INT,
-            FOREIGN KEY (idAgence) REFERENCES Agence(id),
-            FOREIGN KEY (idligne) REFERENCES Ligne(id)
+            FOREIGN KEY (idSociete) REFERENCES Society(id),
+            FOREIGN KEY (idBus) REFERENCES Bus(id),
+            FOREIGN KEY (idligne) REFERENCES Lignes(id)
         );`;
     
 

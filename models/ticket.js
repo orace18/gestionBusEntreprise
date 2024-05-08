@@ -1,10 +1,10 @@
 const pool = require('../databases/database');  
 
-exports.createTicket = (type, nomVoyeur, dateAchat, dateVoyage, lieuDepart, lieuDestination, heureDepart, idAgence, idLigne, heureDestination) => {
+exports.createTicket = (type, nomVoyeur, telvoyageur,dateAchat, dateVoyage, lieuDepart, lieuDestination, heureDepart, idLigne, idBus,heureDestination) => {
     return new Promise((resolve, reject) => {
         pool.query(
-            'INSERT INTO Ticket (type, nomvoyeur, dateachat, datevoyage, lieudepart, lieudestination, heuredepart, idAgence, idligne, heuredestination) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [type, nomVoyeur, dateAchat, dateVoyage, lieuDepart, lieuDestination, heureDepart, idAgence, idLigne, heureDestination],
+            'INSERT INTO Ticket (type, nomvoyeur, telvoyageur,dateachat, datevoyage, lieudepart, lieudestination, heuredepart, idligne, idBus,heuredestination) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [type, nomVoyeur, dateAchat, dateVoyage, lieuDepart, lieuDestination, heureDepart, idAgence, idLigne, idBus,heureDestination],
             (error, results) => {
                 if (error) {
                     return reject(error);

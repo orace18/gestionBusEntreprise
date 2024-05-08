@@ -1,9 +1,9 @@
-const pool = require('../databases/dbConfig');
+const pool = require('../databases/database');
 
 exports.createLigne = (nomDeLaLigne, depart, destination, heureDepart, heureDestination, nombreEscales, lieuesEscales) => {
     return new Promise((resolve, reject) => {
         pool.query(
-            'INSERT INTO Ligne (nomdelaligne, depart, destination, heuredepart, heuredestination, nombresescales, lieuescales) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO Lignes (nomdelaligne, depart, destination, heuredepart, heuredestination, nombresescales, lieuescales) VALUES (?, ?, ?, ?, ?, ?, ?)',
             [nomDeLaLigne, depart, destination, heureDepart, heureDestination, nombreEscales, lieuesEscales],
             (error, results) => {
                 if (error) {
@@ -17,7 +17,7 @@ exports.createLigne = (nomDeLaLigne, depart, destination, heureDepart, heureDest
 
 exports.getAllLignes = () => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM Ligne', (error, results) => {
+        pool.query('SELECT * FROM Lignes', (error, results) => {
             if (error) {
                 return reject(error);
             }
@@ -28,7 +28,7 @@ exports.getAllLignes = () => {
 
 exports.getLigneById = (id) => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM Ligne WHERE id = ?', [id], (error, results) => {
+        pool.query('SELECT * FROM Lignes WHERE id = ?', [id], (error, results) => {
             if (error) {
                 return reject(error);
             }
@@ -40,7 +40,7 @@ exports.getLigneById = (id) => {
 exports.updateLigne = (id, nomDeLaLigne, depart, destination, heureDepart, heureDestination, nombreEscales, lieuesEscales) => {
     return new Promise((resolve, reject) => {
         pool.query(
-            'UPDATE Ligne SET nomdelaligne = ?, depart = ?, destination = ?, heuredepart = ?, heuredestination = ?, nombresescales = ?, lieuescales = ? WHERE id = ?',
+            'UPDATE Lignes SET nomdelaligne = ?, depart = ?, destination = ?, heuredepart = ?, heuredestination = ?, nombresescales = ?, lieuescales = ? WHERE id = ?',
             [nomDeLaLigne, depart, destination, heureDepart, heureDestination, nombreEscales, lieuesEscales, id],
             (error, results) => {
                 if (error) {
@@ -54,7 +54,7 @@ exports.updateLigne = (id, nomDeLaLigne, depart, destination, heureDepart, heure
 
 exports.deleteLigne = (id) => {
     return new Promise((resolve, reject) => {
-        pool.query('DELETE FROM Ligne WHERE id = ?', [id], (error, results) => {
+        pool.query('DELETE FROM Lignes WHERE id = ?', [id], (error, results) => {
             if (error) {
                 return reject(error);
             }
