@@ -1,18 +1,17 @@
 const pool = require('../databases/database');  
+const db = require('../databases/db'); 
 
-exports.createTicket = (type, nomVoyeur, telvoyageur,dateAchat, dateVoyage, lieuDepart, lieuDestination, heureDepart, idLigne, idBus,heureDestination) => {
-    return new Promise((resolve, reject) => {
-        pool.query(
-            'INSERT INTO Ticket (type, nomvoyeur, telvoyageur,dateachat, datevoyage, lieudepart, lieudestination, heuredepart, idligne, idBus,heuredestination) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [type, nomVoyeur, dateAchat, dateVoyage, lieuDepart, lieuDestination, heureDepart, idAgence, idLigne, idBus,heureDestination],
-            (error, results) => {
-                if (error) {
-                    return reject(error);
-                }
-                resolve(results.insertId);
-            }
-        );
-    });
+
+exports.createTicket = async (ticketData) => {
+    try {
+        const { nomvoyeur, telvoyeur, datevoyage, lieudepart, lieudestination, idSociete, idBus, idligne, isbuy } = ticketData;
+        const sql = 'INSERT INTO Ticket (nomvoyeur, telvoyeur, datevoyage, lieudepart, lieudestination, idSociete, idBus, idligne, isbuy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const [result] = await db.promise().query(sql, [nomvoyeur, telvoyeur, datevoyage, lieudepart, lieudestination, idSociete, idBus, idligne, isbuy]);
+        return result.insertId;
+    } catch (error) {
+        console.error("Erreur DB :", error);
+        throw error;  // Renvoie l'erreur pour traitement ultérieur
+    }
 };
 
 exports.getAllTickets = () => {

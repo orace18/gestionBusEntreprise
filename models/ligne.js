@@ -1,10 +1,10 @@
 const pool = require('../databases/database');
 
-exports.createLigne = (nomDeLaLigne, depart, destination, heureDepart, heureDestination, nombreEscales, lieuesEscales) => {
+exports.createLigne = (nomDeLaLigne, depart, destination, heureDepart, heureDestination, nombreEscales, lieuesEscales, idBus) => {
     return new Promise((resolve, reject) => {
         pool.query(
-            'INSERT INTO Lignes (nomdelaligne, depart, destination, heuredepart, heuredestination, nombresescales, lieuescales) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [nomDeLaLigne, depart, destination, heureDepart, heureDestination, nombreEscales, lieuesEscales],
+            'INSERT INTO Lignes (nomdelaligne, depart, destination, heuredepart, heuredestination, nombresescales, lieuescales, idBus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [nomDeLaLigne, depart, destination, heureDepart, heureDestination, nombreEscales, lieuesEscales, idBus],
             (error, results) => {
                 if (error) {
                     return reject(error);

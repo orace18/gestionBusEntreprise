@@ -16,7 +16,7 @@ const societeRoutes = require('./routers/societeRoutes');
 
 const app = express();
 const port = process.env.PORT || 7878; 
-const hostname = process.env.HOSTNAME || '192.168.0.104'; 
+const hostname = process.env.HOSTNAME || '192.168.1.155'; 
 
 
 app.use(express.json());
@@ -92,6 +92,25 @@ function createTables() {
             ON UPDATE CASCADE
     );`;
 
+
+    const sqlBus = `
+        CREATE TABLE IF NOT EXISTS Bus (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            immatriculation VARCHAR(255) NOT NULL,
+            nombrederoue INT,
+            nombredeplace INT,
+            couleur VARCHAR(50),
+            etat VARCHAR(100),
+            heuredepart TIME,
+            heuredestination TIME,
+            datedepart DATE,
+            datedestination DATE,
+            type VARCHAR(100),
+            idconducteur INT,
+            FOREIGN KEY (idconducteur) REFERENCES Conducteur(id)
+        );`;
+    
+
     const sqlLigne = `
     CREATE TABLE IF NOT EXISTS Lignes (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -102,8 +121,11 @@ function createTables() {
         heuredestination TIME NOT NULL,
         nombresescales INT DEFAULT 0,
         lieuescales TEXT,
+        idBus INT,
+        tarif VARCHAR(255) NOT NULL,
         idSociete INT,
-        FOREIGN KEY (idSociete) REFERENCES Society(id)
+        FOREIGN KEY (idSociete) REFERENCES Society(id),
+        FOREIGN KEY (idBus) REFERENCES Bus(id)
     );`;
 
     const sqlConducteur = `
@@ -116,24 +138,6 @@ function createTables() {
             typedepermis VARCHAR(50)
         );`;
     
-    const sqlBus = `
-        CREATE TABLE IF NOT EXISTS Bus (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            immatriculation VARCHAR(255) NOT NULL,
-            nombrederoue INT,
-            nombredeplace INT,
-            couleur VARCHAR(50),
-            etat VARCHAR(100),
-            idligne INT,
-            heuredepart TIME,
-            heuredestination TIME,
-            datedepart DATE,
-            datedestination DATE,
-            type VARCHAR(100),
-            idconducteur INT,
-            FOREIGN KEY (idligne) REFERENCES Lignes(id),
-            FOREIGN KEY (idconducteur) REFERENCES Conducteur(id)
-        );`;
     
     const sqlTicket = `
         CREATE TABLE IF NOT EXISTS Ticket (
@@ -141,17 +145,15 @@ function createTables() {
             type VARCHAR(100),
             nomvoyeur VARCHAR(255),
             telvoyeur VARCHAR(255),
-            dateachat DATE,
-            datevoyage DATE,
+            dateachat VARCHAR(255),
+            datevoyage VARCHAR(255),
             lieudepart VARCHAR(255),
             lieudestination VARCHAR(255),
-            heuredepart TIME,
+            heuredepart VARCHAR(255),
             idSociete INT,
             idligne INT,
             idBus INT,
-            heuredestination TIME,
-            isbuy BOOLEAN DEFAULT FALSE,
-            Tarif INT,
+            isbuy INT,
             FOREIGN KEY (idSociete) REFERENCES Society(id),
             FOREIGN KEY (idBus) REFERENCES Bus(id),
             FOREIGN KEY (idligne) REFERENCES Lignes(id)
@@ -171,6 +173,10 @@ function createTables() {
         if (err) throw err;
         console.log("Table Agence créée ou déjà existante.");
     });
+    connection.query(sqlBus, (err, result) => {
+        if (err) throw err;
+        console.log("Table Bus créée ou déjà existante.");
+    });
     connection.query(sqlLigne, (err, result) => {
         if (err) throw err;
         console.log("Table Ligne créée ou déjà existante.");
@@ -179,10 +185,7 @@ function createTables() {
         if (err) throw err;
         console.log("Table Conducteur créée ou déjà existante.");
     });
-    connection.query(sqlBus, (err, result) => {
-        if (err) throw err;
-        console.log("Table Bus créée ou déjà existante.");
-    });
+    
     connection.query(sqlTicket, (err, result) => {
         if (err) throw err;
         console.log("Table Ticket créée ou déjà existante.");

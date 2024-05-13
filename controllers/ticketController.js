@@ -1,13 +1,46 @@
 const Ticket = require('../models/ticket');
 
+
 exports.createTicket = async (req, res) => {
+    console.log("Received body:", req.body);
+    
+    const {
+        nomvoyeur,
+        telvoyeur,
+        datevoyage,
+        lieudepart,
+        lieudestination,
+        idSociete,
+        idBus,
+        idligne,
+        isbuy
+    } = req.body;
+
+    console.log(nomvoyeur, telvoyeur, datevoyage, lieudepart, lieudestination, idSociete, idBus, idligne, isbuy);
+
+    if (!nomvoyeur || !telvoyeur || !datevoyage) {
+        return res.status(400).send("Champs requis manquants");
+    }
+
     try {
-        const result = await Ticket.createTicket(...Object.values(req.body));
-        res.status(201).send(`Ticket créé avec succès avec l'ID ${result}`);
+        const result = await Ticket.createTicket({
+            nomvoyeur,
+            telvoyeur,
+            datevoyage,
+            lieudepart,
+            lieudestination,
+            idSociete,
+            idBus,
+            idligne,
+            isbuy
+        });
+        res.status(201).send({ message: "Ticket créé avec succès!", ticketId: result });
     } catch (error) {
-        res.status(500).send(error.message);
+        console.error("Erreur lors de la création du ticket :", error);
+        res.status(500).send("Erreur lors de la création du ticket : " + error.message);
     }
 };
+
 
 exports.getAllTickets = async (req, res) => {
     try {

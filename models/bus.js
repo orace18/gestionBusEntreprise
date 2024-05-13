@@ -1,10 +1,10 @@
 const pool = require('../databases/database');  
 
-exports.createBus = (immatriculation, nombreDeRoues, nombreDePlaces, couleur, etat, idLigne, heureDepart, heureDestination, dateDepart, dateDestination, type, idConducteur) => {
+exports.createBus = (immatriculation, nombreDeRoues, nombreDePlaces, couleur, etat, heureDepart, heureDestination, dateDepart, dateDestination, type, idConducteur) => {
     return new Promise((resolve, reject) => {
         pool.query(
-            'INSERT INTO Bus (immatriculation, nombrederoue, nombredeplace, couleur, etat, idligne, heuredepart, heuredestination, datedepart, datedestination, type, idconducteur) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [immatriculation, nombreDeRoues, nombreDePlaces, couleur, etat, idLigne, heureDepart, heureDestination, dateDepart, dateDestination, type, idConducteur],
+            'INSERT INTO Bus (immatriculation, nombrederoue, nombredeplace, couleur, etat, heuredepart, heuredestination, datedepart, datedestination, type, idconducteur) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [immatriculation, nombreDeRoues, nombreDePlaces, couleur, etat, heureDepart, heureDestination, dateDepart, dateDestination, type, idConducteur],
             (error, results) => {
                 if (error) {
                     return reject(error);
